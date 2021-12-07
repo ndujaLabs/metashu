@@ -33,6 +33,7 @@ Example:
 ## Copyright
 
 2021 (c) Nduja Labs
+
 Author: [Francesco Sullo](https://francesco.sullo.co)
 
 ## License
