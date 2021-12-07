@@ -15,3 +15,5 @@ yarn-error.log*
 
 /images
 /data
+/.nyc_output
+/coverage
