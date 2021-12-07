@@ -77,11 +77,11 @@ Options:
 Example:
   
   # exports a single shuffled array to shuffled-meta.json
-  $ metadata-shuffler -i ../tmp/all-meta.json -o ../tmp/shuffled-meta.json \\
+  $ metashu -i ../tmp/all-meta.json -o ../tmp/shuffled-meta.json \\
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
   # exports individual files, by tokenId, in the meta folder
-  $ metadata-shuffler -i ../tmp/all-meta.json -o ../meta \\
+  $ metashu -i ../tmp/all-meta.json -o ../meta \\
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 `)
   // eslint-disable-next-line no-process-exit
