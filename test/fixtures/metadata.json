@@ -1,0 +1,122 @@
+[
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Schumar",
+    "image": "https://img.everdragons2.com/ed2/Schumar.png",
+    "name": "Schumar",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "Palm memories"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "F11"
+      }
+    ]
+  },
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Voodel",
+    "image": "https://img.everdragons2.com/ed2/Voodel.png",
+    "name": "Voodel",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "Marine blue"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "F11"
+      }
+    ]
+  },
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Llotsu",
+    "image": "https://img.everdragons2.com/ed2/Llotsu.png",
+    "name": "Llotsu",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "After sunset"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "W11"
+      }
+    ]
+  },
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Mosinhood",
+    "image": "https://img.everdragons2.com/ed2/Mosinhood.png",
+    "name": "Mosinhood",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "Green water"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "W11"
+      }
+    ]
+  },
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Rosalia",
+    "image": "https://img.everdragons2.com/ed2/Rosalia.png",
+    "name": "Rosalia",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "Palm memories"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Air"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "A11"
+      }
+    ]
+  },
+  {
+    "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+    "external_url": "https://everdragons2.com/nft/ed2/Maiev",
+    "image": "https://img.everdragons2.com/ed2/Maiev.png",
+    "name": "Maiev",
+    "attributes": [
+      {
+        "trait_type": "Sky",
+        "value": "Shiny tropical"
+      },
+      {
+        "trait_type": "Element",
+        "value": "Air"
+      },
+      {
+        "trait_type": "Color Palette",
+        "value": "A11"
+      }
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "description": "Everdragons2 is a collection of 10,001 dragons randomly generated from hundreds of assets.",
+  "external_url": "https://everdragons2.com/nft/ed2/Schumar",
+  "image": "https://img.everdragons2.com/ed2/Schumar.png",
+  "name": "Schumar",
+  "attributes": [
+    {
+      "trait_type": "Sky",
+      "value": "Palm memories"
+    },
+    {
+      "trait_type": "Element",
+      "value": "Fire"
+    },
+    {
+      "trait_type": "Color Palette",
+      "value": "F11"
+    }
+  ]
+}
