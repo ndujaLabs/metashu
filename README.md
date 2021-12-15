@@ -4,7 +4,7 @@ A simple tool to shuffle an array of NFT metadata using a salt, like the transac
 ## Install
 
 ```
-npm i @ndujalabs/metashu
+npm i -g @ndujalabs/metashu
 ```
 
 ## Help
