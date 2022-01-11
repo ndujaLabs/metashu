@@ -1,13 +1,13 @@
 # metashu — NFT metadata shuffler
 A simple tool to shuffle an array of NFT metadata using a salt, like the transaction of a certain block
 
-## Install
+## Install as a CLI
 
 ```
-npm i @ndujalabs/metashu
+npm i -g @ndujalabs/metashu
 ```
 
-## Help
+Help:
 ``` 
 Options:
   -h, --help         This help.
@@ -30,13 +30,30 @@ Example:
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 ```
 
+## Used inside other tools
+
+Install as usual
+```  
+npm i @ndujalabs/metashu
+```
+
+Example:
+```
+const Metashu = require('@ndujalabs/metashu')
+const options = {
+    input: inputPath,
+    output: outputPath,
+    sale: someSalt
+}
+const metashu = new Metashu(options)
+metashu.shuffle()
+```
+
 ## Copyright
 
-2021 (c) Nduja Labs
-
-Author: [Francesco Sullo](https://francesco.sullo.co)
+2021 (c) [Francesco Sullo](https://francesco.sullo.co) / ndujaLabs
 
 ## License
 
 MIT
-~~~~
+
