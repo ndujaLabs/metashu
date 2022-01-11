@@ -2,7 +2,7 @@
 const fs = require('fs-extra')
 const chalk = require('chalk')
 const commandLineArgs = require('command-line-args')
-const MetadataShuffler = require('../src/MetadataShuffler')
+const Metashu = require('../src/Metashu')
 const pkg = require('../package.json')
 
 const optionDefinitions = [
@@ -59,6 +59,8 @@ try {
   error(e.message)
 }
 
+options.isCLI = true
+
 console.info(chalk.bold.grey(`@ndujalabs/metadata-shuffler v${pkg.version}`))
 
 if (options.help) {
@@ -89,9 +91,8 @@ Example:
 }
 
 async function main() {
-
-  const metadataShuffler = new MetadataShuffler(options)
-  return metadataShuffler.start()
+  const metashu = new Metashu(options)
+  return metashu.shuffle()
 }
 
 main()

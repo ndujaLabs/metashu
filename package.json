@@ -1,6 +1,6 @@
 {
 	"name": "@ndujalabs/metashu",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A simple tool to shuffle an array of NFT metadata",
 	"homepage": "https://github.com/ndujalabs/metadata-shuffler#readme",
 	"bugs": {
@@ -11,7 +11,6 @@
 		"access": "public"
 	},
 	"author": "Francesco Sullo <francesco@sullo.co>",
-	"main": "bin/metashu.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ndujalabs/metadata-shuffler.git"
@@ -27,6 +26,7 @@
 	"bin": {
 		"metashu": "bin/metashu.js"
 	},
+	"main": "src/Metashu.js",
 	"dependencies": {
 		"chai": "^4.3.4",
 		"chalk": "^3.0.0",

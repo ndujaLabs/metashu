@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const ethers = require('ethers')
 
-class MetadataShuffler {
+class Metashu {
 
   constructor(options) {
     this.options = options
@@ -11,19 +11,19 @@ class MetadataShuffler {
     }
   }
 
-  async start() {
+  async shuffle() {
     const opt = this.options
     if (!opt.input || typeof opt.input !== 'string') {
       throw new Error('Input file missing')
     }
-    let input = path.resolve(process.cwd(), opt.input)
+    let input = opt.isCLI ? path.resolve(process.cwd(), opt.input) : opt.input
     if (!(await fs.pathExists(input))) {
       throw new Error('Input file not found')
     }
     if (!opt.output || typeof opt.output !== 'string') {
       throw new Error('Output file missing')
     }
-    let output = path.resolve(process.cwd(), opt.output)
+    let output = opt.isCLI ? path.resolve(process.cwd(), opt.output) : opt.output
     let split = false
     if (await fs.pathExists(output)) {
       if ((await fs.lstat(output)).isDirectory()) {
@@ -80,4 +80,4 @@ class MetadataShuffler {
 }
 
 
-module.exports = MetadataShuffler
+module.exports = Metashu

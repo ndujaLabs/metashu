@@ -2,7 +2,7 @@ const {assert} = require('chai')
 const path = require('path')
 const fs = require('fs-extra')
 
-const MetadataShuffler = require('../src/MetadataShuffler')
+const Metashu = require('../src/Metashu')
 
 async function assertThrowsMessage(promise, message) {
   try {
@@ -46,8 +46,8 @@ describe('metashu', async function () {
 
     it('should shuffle and produce a new array', async function () {
 
-      const metadataShuffler = new MetadataShuffler(opt)
-      const output = await metadataShuffler.start()
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
       const shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
       assert.equal(shuffled[1].name, 'Mosinhood')
@@ -58,10 +58,10 @@ describe('metashu', async function () {
 
       opt.output = path.dirname(opt.output)
 
-      const metadataShuffler = new MetadataShuffler(opt)
-      const output = await metadataShuffler.start()
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
-      const shuffled = JSON.parse(await fs.readFile(output+'/2', 'utf8'))
+      const shuffled = JSON.parse(await fs.readFile(output + '/2', 'utf8'))
       assert.equal(shuffled.name, 'Mosinhood')
       assert.isUndefined(shuffled.tokenId)
 
@@ -72,10 +72,10 @@ describe('metashu', async function () {
       opt.output = path.dirname(opt.output)
       opt.addTokenId = true
 
-      const metadataShuffler = new MetadataShuffler(opt)
-      const output = await metadataShuffler.start()
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
-      const shuffled = JSON.parse(await fs.readFile(output+'/2', 'utf8'))
+      const shuffled = JSON.parse(await fs.readFile(output + '/2', 'utf8'))
       assert.equal(shuffled.name, 'Mosinhood')
       assert.equal(shuffled.tokenId, 2)
 
@@ -83,72 +83,72 @@ describe('metashu', async function () {
 
     it('should throw if bad options', async function () {
 
-      let metadataShuffler = new MetadataShuffler({
+      let metashu = new Metashu({
         output: 'tmp/test/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'Input file missing'
       )
 
-      metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/bringo.json',
         output: 'tmp/test/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'Input file not found'
       )
 
-      metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/not-a-json.json',
         output: 'tmp/test/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'Input file not a JSON file'
       )
 
-       metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/metadata.json',
         // output: 'tmp/test/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'Output file missing'
       )
 
-      metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/metadata.json',
         output: 'tmp/test2/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'Folder containing output file not found'
       )
 
-      metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/metadata.json',
         output: 'tmp/test/output.json',
         // salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'No salt specified'
       )
 
-metadataShuffler = new MetadataShuffler({
+      metashu = new Metashu({
         input: 'test/fixtures/not-an-array.json',
         output: 'tmp/test/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(
-          metadataShuffler.start(),
+          metashu.shuffle(),
           'The array of metadata is not an array'
       )
 
