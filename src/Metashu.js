@@ -11,8 +11,7 @@ class Metashu {
     }
   }
 
-  async shuffle() {
-    const opt = this.options
+  async getInput(opt) {
     if (!opt.input || typeof opt.input !== 'string') {
       throw new Error('Input file missing')
     }
@@ -20,9 +19,10 @@ class Metashu {
     if (!(await fs.pathExists(input))) {
       throw new Error('Input file not found')
     }
-    if (!opt.output || typeof opt.output !== 'string') {
-      throw new Error('Output file missing')
-    }
+    return input
+  }
+
+  async getOutput(opt) {
     let output = opt.isCLI ? path.resolve(process.cwd(), opt.output) : opt.output
     let split = false
     if (await fs.pathExists(output)) {
@@ -31,12 +31,20 @@ class Metashu {
       }
     } else {
       if (!(await fs.pathExists(path.dirname(output)))) {
-          throw new Error('Folder containing output file not found')
+        throw new Error('Folder containing output file not found')
       }
     }
+    return {output, split}
+  }
+
+  getSalt(opt) {
     if (!opt.salt || typeof opt.salt !== 'string') {
       throw new Error('No salt specified')
     }
+    return opt.salt
+  }
+
+  async getMetadata(input) {
     let metadata
     try {
       metadata = JSON.parse(await fs.readFile(input, 'utf8'))
@@ -46,11 +54,15 @@ class Metashu {
     if (!Array.isArray(metadata)) {
       throw new Error('The array of metadata is not an array')
     }
+    return metadata
+  }
+
+  getShuffling(metadata, salt) {
     const shuffling = []
     for (let i = 0; i < metadata.length; i++) {
       shuffling.push({
         index: i,
-        salted: ethers.utils.id(JSON.stringify(metadata[i]) + opt.salt)
+        salted: ethers.utils.id(JSON.stringify(metadata[i]) + salt)
       })
     }
     shuffling.sort((a, b) => {
@@ -58,8 +70,24 @@ class Metashu {
       b = b.salted
       return a > b ? 1 : a < b ? -1 : 0
     })
+    return shuffling
+  }
+
+  async shuffle() {
+    const opt = this.options
+    const input = await this.getInput(opt)
+    const {output, split} = await this.getOutput(opt)
+    const salt = this.getSalt(opt)
+    const metadata = await this.getMetadata(input)
+    const shuffling = this.getShuffling(metadata, salt)
     const shuffled = []
-    for (let i = 0; i < shuffling.length; i++) {
+    let start = 0;
+    let limit = shuffling.length;
+    if (Array.isArray(opt.subset)) {
+      start = opt.subset[0]
+      limit = opt.subset[1]
+    }
+    for (let i = start; i < limit; i++) {
       let item = metadata[shuffling[i].index]
       if (split) {
         if (opt.addTokenId) {

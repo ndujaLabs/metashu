@@ -1,6 +1,7 @@
 const {assert} = require('chai')
 const path = require('path')
 const fs = require('fs-extra')
+const _ = require('lodash')
 
 const Metashu = require('../src/Metashu')
 
@@ -34,14 +35,15 @@ describe('metashu', async function () {
 
   describe('Shuffle an array using a block hash', async function () {
 
-    let opt = {
-      input: 'test/fixtures/metadata.json',
-      output: 'tmp/test/output.json',
-      salt: blockHash
-    }
+    let opt
 
     beforeEach(async function () {
-      // await fs.emptyDir(tmpDir)
+      await fs.emptyDir(path.resolve(__dirname, '../tmp/test'))
+      opt = {
+        input: 'test/fixtures/metadata.json',
+        output: 'tmp/test/output.json',
+        salt: blockHash
+      }
     })
 
     it('should shuffle and produce a new array', async function () {
@@ -80,6 +82,20 @@ describe('metashu', async function () {
       assert.equal(shuffled.tokenId, 2)
 
     })
+
+    it.skip('should shuffle, getting only 3 items out of 6', async function () {
+      opt.subset = [0, 5]
+      opt.remaining = 'tmp/test/remaining.json'
+
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      const shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
+      assert.equal(shuffled[1].name, 'Mosinhood')
+
+    })
+
+
 
     it('should throw if bad options', async function () {
 
