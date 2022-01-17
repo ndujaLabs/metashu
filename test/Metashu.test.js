@@ -83,18 +83,23 @@ describe('metashu', async function () {
 
     })
 
-    it.skip('should shuffle, getting only 3 items out of 6', async function () {
-      opt.subset = [0, 5]
+    it('should shuffle, getting only 3 items out of 6', async function () {
+
+      opt.subset = [0, 1] // gets first two items
       opt.remaining = 'tmp/test/remaining.json'
+      opt.prefix = 'Everdragons Genesis #'
 
       const metashu = new Metashu(opt)
-      const output = await metashu.shuffle()
+      const [output, remaining] = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
       const shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
-      assert.equal(shuffled[1].name, 'Mosinhood')
+      const unshuffled = JSON.parse(await fs.readFile(remaining, 'utf8'))
+      assert.equal(shuffled.length, 2)
+      assert.equal(shuffled[1].name, 'Everdragons Genesis #2')
+      assert.equal(unshuffled.length, 4)
+      assert.equal(unshuffled[2].name, 'Voodel')
 
     })
-
 
 
     it('should throw if bad options', async function () {

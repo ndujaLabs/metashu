@@ -23,6 +23,9 @@ class Metashu {
   }
 
   async getOutput(opt) {
+    if (!opt.output || typeof opt.output !== 'string') {
+      throw new Error('Output file missing')
+    }
     let output = opt.isCLI ? path.resolve(process.cwd(), opt.output) : opt.output
     let split = false
     if (await fs.pathExists(output)) {
@@ -35,6 +38,13 @@ class Metashu {
       }
     }
     return {output, split}
+  }
+
+  async getRemaining(opt) {
+    if (!opt.remaining || typeof opt.remaining !== 'string') {
+      throw new Error('Remaining file missing')
+    }
+    return opt.isCLI ? path.resolve(process.cwd(), opt.remaining) : opt.remaining
   }
 
   getSalt(opt) {
@@ -81,27 +91,42 @@ class Metashu {
     const metadata = await this.getMetadata(input)
     const shuffling = this.getShuffling(metadata, salt)
     const shuffled = []
-    let start = 0;
-    let limit = shuffling.length;
-    if (Array.isArray(opt.subset)) {
-      start = opt.subset[0]
-      limit = opt.subset[1]
+    let first
+    let last
+    let remaining
+    let remainingMetadata = []
+    if (Array.isArray(opt.subset) && opt.subset[1]) {
+      first = opt.subset[0]
+      last = opt.subset[1]
+      remaining = await this.getRemaining(opt)
     }
-    for (let i = start; i < limit; i++) {
+    for (let i = 0; i < shuffling.length; i++) {
       let item = metadata[shuffling[i].index]
-      if (split) {
+      if (!last || (i >= first && i <= last)) {
         if (opt.addTokenId) {
           item.tokenId = i + opt.firstId
         }
-        await fs.writeFile(path.resolve(output, '' + (i + opt.firstId)), JSON.stringify(item, null, 2))
+        if (opt.prefix) {
+          item.name = opt.prefix + (i + opt.firstId)
+        }
+        if (split) {
+          await fs.writeFile(path.resolve(output, '' + (i + opt.firstId)), JSON.stringify(item, null, 2))
+        } else {
+          shuffled.push(item)
+        }
       } else {
-        shuffled.push(item)
+        remainingMetadata.push(item)
       }
     }
     if (!split) {
       await fs.writeFile(output, JSON.stringify(shuffled, null, 2))
     }
-    return output
+    if (remainingMetadata.length) {
+      await fs.writeFile(remaining, JSON.stringify(remainingMetadata, null, 2))
+      return [output, remaining]
+    } else {
+      return output
+    }
   }
 
 

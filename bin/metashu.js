@@ -27,6 +27,11 @@ const optionDefinitions = [
     type: String
   },
   {
+    name: 'name-prefix',
+    alias: 'n',
+    type: String
+  },
+  {
     name: 'salt',
     alias: 's',
     type: String
@@ -36,10 +41,8 @@ const optionDefinitions = [
     alias: 'f',
     type: Number
   },
-  ,
   {
     name: 'subset',
-    alias: 'e',
     multiple: true,
     type: Number
   },
@@ -86,6 +89,7 @@ Options:
                      If output is a folder, the shuffled array will
                      generate individual files for any item  
       --subset       Apply the shuffle only to a subset        
+  -p, --prefix       Rename the items using the prefix + tokenId  
   -r, --remaining    Used with, and only with --subset, saves the metadata not 
                      included in the subset in a new file             
   -f, --first-id     By default, it is 1. Set it if you need a different number
@@ -93,8 +97,10 @@ Options:
                      ERC721 standard, but required by some exchanges)                       
 Example:
   
-  # exports a single shuffled array to shuffled-meta.json
+  # exports a single shuffled array to shuffled-meta.json, 
+  # renaming any token as Super Ape #1, Super Ape #2, etc.
   $ metashu -i ../tmp/all-meta.json -o ../tmp/shuffled-meta.json \\
+          -p "Super Ape #"
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
   # exports individual files, by tokenId, in the meta folder
@@ -103,7 +109,7 @@ Example:
 
   # exports a subset of only the first 5 items, putting the remaining in a file  
   $ metashu -i ../tmp/all-meta.json -o ../meta \\
-          -e 0 5 -r ../tmp/not-shuffled-meta.json
+          -e 0 4 -r ../tmp/not-shuffled-meta.json
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
 `)
