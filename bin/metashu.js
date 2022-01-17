@@ -22,6 +22,16 @@ const optionDefinitions = [
     type: String
   },
   {
+    name: 'remaining',
+    alias: 'r',
+    type: String
+  },
+  {
+    name: 'name-prefix',
+    alias: 'n',
+    type: String
+  },
+  {
     name: 'salt',
     alias: 's',
     type: String
@@ -29,6 +39,11 @@ const optionDefinitions = [
   {
     name: 'first-id',
     alias: 'f',
+    type: Number
+  },
+  {
+    name: 'subset',
+    multiple: true,
     type: Number
   },
   {
@@ -73,18 +88,30 @@ Options:
   -o, --output       The file where to save the shuffled array.
                      If output is a folder, the shuffled array will
                      generate individual files for any item  
+      --subset       Apply the shuffle only to a subset        
+  -p, --prefix       Rename the items using the prefix + tokenId  
+  -r, --remaining    Used with, and only with --subset, saves the metadata not 
+                     included in the subset in a new file             
   -f, --first-id     By default, it is 1. Set it if you need a different number
   --add-token-id     Adds a property tokenId in the metadata (not required by the
                      ERC721 standard, but required by some exchanges)                       
 Example:
   
-  # exports a single shuffled array to shuffled-meta.json
+  # exports a single shuffled array to shuffled-meta.json, 
+  # renaming any token as Super Ape #1, Super Ape #2, etc.
   $ metashu -i ../tmp/all-meta.json -o ../tmp/shuffled-meta.json \\
+          -p "Super Ape #"
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
   # exports individual files, by tokenId, in the meta folder
   $ metashu -i ../tmp/all-meta.json -o ../meta \\
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
+
+  # exports a subset of only the first 5 items, putting the remaining in a file  
+  $ metashu -i ../tmp/all-meta.json -o ../meta \\
+          -e 0 4 -r ../tmp/not-shuffled-meta.json
+          -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
+
 `)
   // eslint-disable-next-line no-process-exit
   process.exit(0)
