@@ -48,6 +48,7 @@ class Metashu {
   }
 
   getSalt(opt) {
+    console.log(opt)
     if (!opt.salt || typeof opt.salt !== 'string') {
       throw new Error('No salt specified')
     }
