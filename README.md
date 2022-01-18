@@ -55,13 +55,18 @@ npm i @ndujalabs/metashu
 Example:
 ```
 const Metashu = require('@ndujalabs/metashu')
-const options = {
+
+async shuffleMetadata(options) {
+    const metashu = new Metashu(options)
+    await metashu.shuffle()
+}
+
+shuffleMetadata({
     input: inputPath,
     output: outputPath,
     salt: someSalt
-}
-const metashu = new Metashu(options)
-metashu.shuffle()
+}) 
+
 ```
 
 ## Copyright
