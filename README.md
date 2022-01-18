@@ -58,7 +58,7 @@ const Metashu = require('@ndujalabs/metashu')
 const options = {
     input: inputPath,
     output: outputPath,
-    sale: someSalt
+    salt: someSalt
 }
 const metashu = new Metashu(options)
 metashu.shuffle()

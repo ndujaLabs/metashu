@@ -88,7 +88,7 @@ Options:
   -o, --output       The file where to save the shuffled array.
                      If output is a folder, the shuffled array will
                      generate individual files for any item  
-      --subset       Apply the shuffle only to a subset        
+  --subset           Apply the shuffle only to a subset        
   -p, --prefix       Rename the items using the prefix + tokenId  
   -r, --remaining    Used with, and only with --subset, saves the metadata not 
                      included in the subset in a new file             
