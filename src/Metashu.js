@@ -48,7 +48,6 @@ class Metashu {
   }
 
   getSalt(opt) {
-    console.log(opt)
     if (!opt.salt || typeof opt.salt !== 'string') {
       throw new Error('No salt specified')
     }
@@ -119,12 +118,9 @@ class Metashu {
         remainingMetadata.push(item)
       }
     }
-
-    console.log(output)
     if (!split) {
       await fs.writeFile(output, JSON.stringify(shuffled, null, 2))
     }
-
     if (remainingMetadata.length) {
       await fs.writeFile(remaining, JSON.stringify(remainingMetadata, null, 2))
       return [output, remaining]

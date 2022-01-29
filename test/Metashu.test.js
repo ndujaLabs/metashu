@@ -56,6 +56,17 @@ describe('metashu', async function () {
 
     })
 
+    it('should shuffle a minimalistic array with just image and name', async function () {
+
+      opt.input = 'test/fixtures/metadata-minimalistic.json'
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      const shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
+      assert.equal(shuffled[1].name, 'Schumar')
+
+    })
+
     it('should shuffle and create individual files', async function () {
 
       opt.output = path.dirname(opt.output)
