@@ -50,6 +50,16 @@ const optionDefinitions = [
     name:'add-token-id',
     alias: 'a',
     type: Boolean
+  },
+  {
+    name: 'json-ext',
+    alias: 'j',
+    type: Boolean
+  },
+  {
+    name: 'json-name-prefix',
+    alias: 'J',
+    type: Boolean
   }
 ]
 
@@ -82,20 +92,24 @@ if (options.help) {
   console.info(`${pkg.description}
 
 Options:
-  -h, --help         This help.
-  -i, --input        A file containing an array of metadata json
-  -s, --salt         The salt used to reshuffle the array
-  -o, --output       The file where to save the shuffled array.
-                     If output is a folder, the shuffled array will
-                     generate individual files for any item  
-  --subset           Apply the shuffle only to a subset        
-  -p, --prefix       Rename the items using the prefix + tokenId  
-  -n, --name-mask    A mask to generate the final name
-  -r, --remaining    Used with, and only with --subset, saves the metadata not 
-                     included in the subset in a new file             
-  -f, --first-id     By default, it is 1. Set it if you need a different number
-  --add-token-id     Adds a property tokenId in the metadata (not required by the
-                     ERC721 standard, but required by some exchanges)                       
+  -h, --help              This help.
+  -i, --input             A file containing an array of metadata json
+  -s, --salt              The salt used to reshuffle the array
+  -o, --output            The file where to save the shuffled array.
+                            If output is a folder, the shuffled array will
+                            generate individual files for any item  
+  --subset                Apply the shuffle only to a subset        
+  -p, --prefix            Rename the items using the prefix + tokenId  
+  -n, --name-mask         A mask to generate the final name
+  -r, --remaining         Used with, and only with --subset, saves the metadata not 
+                            included in the subset in a new file             
+  -f, --first-id          By default, it is 1. Set it if you need a different number
+  --add-token-id          Adds a property tokenId in the metadata (not required by the
+                            ERC721 standard, but required by some exchanges)
+  -j, --json-ext          If true — only for individual files — the metadata JSON 
+                            files will be saved as "1.json" instead of "1"         
+  -J, --json-name-prefix  Set a name prexif for the metadata JSON files. It works
+                            only with individual json files                                                    
 Example:
   
   # exports a single shuffled array to shuffled-meta.json, 
