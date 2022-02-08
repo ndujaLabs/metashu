@@ -103,10 +103,17 @@ class Metashu {
     for (let i = 0; i < shuffling.length; i++) {
       let item = metadata[shuffling[i].index]
       if (!last || (i >= first && i <= last)) {
+        let tokenId = i + opt.firstId
         if (opt.addTokenId) {
-          item.tokenId = i + opt.firstId
+          item.tokenId = tokenId
         }
-        if (opt.prefix) {
+        if (opt.nameMask) {
+          item.name = opt.nameMask
+              .replace(/([^{]*)\{name\}([^}]*)/, "$1"+ item.name+"$2")
+              .replace(/([^{]*)\{id\}([^}]*)/, "$1"+ tokenId +"$2")
+              .replace(/\{\{/g, "{")
+              .replace(/}}/g, "}")
+        } else if (opt.prefix) {
           item.name = opt.prefix + (i + opt.firstId)
         }
         if (split) {

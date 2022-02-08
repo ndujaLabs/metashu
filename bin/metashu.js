@@ -90,6 +90,7 @@ Options:
                      generate individual files for any item  
   --subset           Apply the shuffle only to a subset        
   -p, --prefix       Rename the items using the prefix + tokenId  
+  -n, --name-mask    A mask to generate the final name
   -r, --remaining    Used with, and only with --subset, saves the metadata not 
                      included in the subset in a new file             
   -f, --first-id     By default, it is 1. Set it if you need a different number
@@ -107,8 +108,10 @@ Example:
   $ metashu -i ../tmp/all-meta.json -o ../meta \\
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
-  # exports a subset of only the first 5 items, putting the remaining in a file  
+  # exports a subset of only the first 5 items, putting the remaining in a file
+      and rename the token, for example, from "Jorgor" to "Everdragons Genesis #23 | Jorgor"   
   $ metashu -i ../tmp/all-meta.json -o ../meta \\
+          -n "Everdragons Genesis #{id} | {name}"
           -e 0 4 -r ../tmp/not-shuffled-meta.json
           -s 0x0863243f8d858815db8de23b7f1399b8f975672a750284209ac35e8d91d89afd
 
