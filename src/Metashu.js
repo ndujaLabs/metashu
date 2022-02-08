@@ -117,7 +117,8 @@ class Metashu {
           item.name = opt.prefix + (i + opt.firstId)
         }
         if (split) {
-          await fs.writeFile(path.resolve(output, '' + (i + opt.firstId)), JSON.stringify(item, null, 2))
+          const jsonName = (opt.jsonNamePrefix || '') + tokenId + (opt.jsonExt ? '.json' : '')
+          await fs.writeFile(path.resolve(output, jsonName), JSON.stringify(item, null, 2))
         } else {
           shuffled.push(item)
         }

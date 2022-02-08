@@ -98,6 +98,21 @@ describe('metashu', async function () {
 
     })
 
+    it('should shuffle and create individual files with name and extension', async function () {
+
+      opt.output = path.dirname(opt.output)
+      opt.jsonExt = true
+      opt.jsonNamePrefix = 'meta-'
+
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      const shuffled = JSON.parse(await fs.readFile(output + '/meta-2.json', 'utf8'))
+      assert.equal(shuffled.name, 'Mosinhood')
+      assert.isUndefined(shuffled.tokenId)
+
+    })
+
     it('should shuffle and create individual files, adding a tokenId field', async function () {
 
       opt.output = path.dirname(opt.output)
