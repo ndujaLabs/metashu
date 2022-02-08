@@ -56,6 +56,24 @@ describe('metashu', async function () {
 
     })
 
+    it('should shuffle and rename the tokens using a mask', async function () {
+
+      opt.nameMask = "Everdragons Genesis #{id} | {name}"
+      let metashu = new Metashu(opt)
+      let output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      let shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
+      assert.equal(shuffled[1].name, 'Everdragons Genesis #2 | Mosinhood')
+
+      opt.nameMask = "Everdragon {name} Genesis #{id}"
+      metashu = new Metashu(opt)
+      output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      shuffled = JSON.parse(await fs.readFile(output, 'utf8'))
+      assert.equal(shuffled[1].name, 'Everdragon Mosinhood Genesis #2')
+
+    })
+
     it('should shuffle a minimalistic array with just image and name', async function () {
 
       opt.input = 'test/fixtures/metadata-minimalistic.json'
