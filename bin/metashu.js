@@ -60,6 +60,11 @@ const optionDefinitions = [
     name: 'json-name-prefix',
     alias: 'J',
     type: Boolean
+  },
+  {
+    name: 'limit',
+    alias: 'l',
+    type: Number
   }
 ]
 
@@ -109,7 +114,8 @@ Options:
   -j, --json-ext          If true — only for individual files — the metadata JSON 
                             files will be saved as "1.json" instead of "1"         
   -J, --json-name-prefix  Set a name prexif for the metadata JSON files. It works
-                            only with individual json files                                                    
+                            only with individual json files    
+  -l, --limit             Save only a limited number of the shuffled data                                                                          
 Example:
   
   # exports a single shuffled array to shuffled-meta.json, 

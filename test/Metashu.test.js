@@ -30,7 +30,7 @@ describe('metashu', async function () {
   })
 
   after(async function () {
-    await fs.emptyDir(path.resolve(__dirname, '../tmp/test'))
+    // await fs.emptyDir(tmpDir)
   })
 
   describe('Shuffle an array using a block hash', async function () {
@@ -38,10 +38,10 @@ describe('metashu', async function () {
     let opt
 
     beforeEach(async function () {
-      await fs.emptyDir(path.resolve(__dirname, '../tmp/test'))
+      await fs.emptyDir(tmpDir)
       opt = {
-        input: 'test/fixtures/metadata.json',
-        output: 'tmp/test/output.json',
+        input: path.resolve(__dirname, 'fixtures/metadata.json'),
+        output: path.resolve(tmpDir, 'output.json'),
         salt: blockHash
       }
     })
@@ -95,6 +95,18 @@ describe('metashu', async function () {
       const shuffled = JSON.parse(await fs.readFile(output + '/2', 'utf8'))
       assert.equal(shuffled.name, 'Mosinhood')
       assert.isUndefined(shuffled.tokenId)
+      assert.isTrue(await fs.pathExists(output + '/4', 'utf8'))
+    })
+
+    it('should shuffle and create only 3 individual files', async function () {
+
+      opt.output = path.dirname(opt.output)
+      opt.limit = 3
+
+      const metashu = new Metashu(opt)
+      const output = await metashu.shuffle()
+      assert.isTrue(await fs.pathExists(output))
+      assert.isFalse(await fs.pathExists(output + '/4', 'utf8'))
 
     })
 

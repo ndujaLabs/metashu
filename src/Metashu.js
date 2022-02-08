@@ -100,7 +100,11 @@ class Metashu {
       last = opt.subset[1]
       remaining = await this.getRemaining(opt)
     }
-    for (let i = 0; i < shuffling.length; i++) {
+    let len = shuffling.length
+    if (opt.limit && opt.limit < shuffling.length) {
+      len = opt.limit
+    }
+    for (let i = 0; i < len; i++) {
       let item = metadata[shuffling[i].index]
       if (!last || (i >= first && i <= last)) {
         let tokenId = i + opt.firstId
