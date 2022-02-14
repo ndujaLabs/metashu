@@ -71,7 +71,7 @@ shuffleMetadata({
 
 ## Copyright
 
-2021 (c) [Francesco Sullo](https://francesco.sullo.co) / ndujaLabs
+2021 (c) [Francesco Sullo](https://francesco.sullo.co) / [ndujaLabs](https://ndujalabs.com)
 
 ## License
 
