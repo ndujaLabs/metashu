@@ -104,10 +104,11 @@ describe('metashu', async function () {
       opt.limit = 3
 
       const metashu = new Metashu(opt)
-      const output = await metashu.shuffle()
+      const [output, remaining] = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
+      assert.isTrue(await fs.pathExists(remaining))
       assert.isFalse(await fs.pathExists(output + '/4', 'utf8'))
-
+      await fs.unlink(remaining)
     })
 
     it('should shuffle and create individual files with name and extension', async function () {
