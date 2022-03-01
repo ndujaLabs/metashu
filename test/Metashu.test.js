@@ -30,7 +30,7 @@ describe('metashu', async function () {
   })
 
   after(async function () {
-    // await fs.emptyDir(tmpDir)
+    await fs.emptyDir(tmpDir)
   })
 
   describe('Shuffle an array using a block hash', async function () {
@@ -142,7 +142,7 @@ describe('metashu', async function () {
     it('should shuffle, getting only 3 items out of 6', async function () {
 
       opt.subset = [0, 1] // gets first two items
-      opt.remaining = 'tmp/test/remaining.json'
+      opt.remaining = 'tmp/test/mom/remaining.json'
       opt.prefix = 'Everdragons Genesis #'
 
       const metashu = new Metashu(opt)
@@ -201,7 +201,7 @@ describe('metashu', async function () {
 
       metashu = new Metashu({
         input: 'test/fixtures/metadata.json',
-        output: 'tmp/test2/output.json',
+        output: 'tmp/test/mom2/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(

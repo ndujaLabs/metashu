@@ -134,6 +134,7 @@ class Metashu {
       await fs.writeFile(output, JSON.stringify(shuffled, null, 2))
     }
     if (remainingMetadata.length) {
+      await fs.ensureDir(path.dirname(remaining))
       await fs.writeFile(remaining, JSON.stringify(remainingMetadata, null, 2))
       return [output, remaining]
     } else {

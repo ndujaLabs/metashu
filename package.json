@@ -1,6 +1,6 @@
 {
 	"name": "@ndujalabs/metashu",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "A simple tool to shuffle an array of NFT metadata",
 	"homepage": "https://github.com/ndujalabs/metadata-shuffler#readme",
 	"bugs": {
