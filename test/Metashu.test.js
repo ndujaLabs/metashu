@@ -30,7 +30,7 @@ describe('metashu', async function () {
   })
 
   after(async function () {
-    // await fs.emptyDir(tmpDir)
+    await fs.emptyDir(tmpDir)
   })
 
   describe('Shuffle an array using a block hash', async function () {
@@ -104,10 +104,11 @@ describe('metashu', async function () {
       opt.limit = 3
 
       const metashu = new Metashu(opt)
-      const output = await metashu.shuffle()
+      const [output, remaining] = await metashu.shuffle()
       assert.isTrue(await fs.pathExists(output))
+      assert.isTrue(await fs.pathExists(remaining))
       assert.isFalse(await fs.pathExists(output + '/4', 'utf8'))
-
+      await fs.unlink(remaining)
     })
 
     it('should shuffle and create individual files with name and extension', async function () {
@@ -122,6 +123,15 @@ describe('metashu', async function () {
       const shuffled = JSON.parse(await fs.readFile(output + '/meta-2.json', 'utf8'))
       assert.equal(shuffled.name, 'Mosinhood')
       assert.isUndefined(shuffled.tokenId)
+
+    })
+
+    it('should shuffle without saving anything', async function () {
+
+      opt.doNotSave = true
+      const metashu = new Metashu(opt)
+      const shuffled = await metashu.shuffle()
+      assert.equal(shuffled[1].name, 'Mosinhood')
 
     })
 
@@ -142,7 +152,7 @@ describe('metashu', async function () {
     it('should shuffle, getting only 3 items out of 6', async function () {
 
       opt.subset = [0, 1] // gets first two items
-      opt.remaining = 'tmp/test/remaining.json'
+      opt.remaining = 'tmp/test/mom/remaining.json'
       opt.prefix = 'Everdragons Genesis #'
 
       const metashu = new Metashu(opt)
@@ -201,7 +211,7 @@ describe('metashu', async function () {
 
       metashu = new Metashu({
         input: 'test/fixtures/metadata.json',
-        output: 'tmp/test2/output.json',
+        output: 'tmp/test/mom2/output.json',
         salt: blockHash
       })
       await assertThrowsMessage(

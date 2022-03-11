@@ -65,6 +65,11 @@ const optionDefinitions = [
     name: 'limit',
     alias: 'l',
     type: Number
+  },
+  {
+    name: 'no-not-save',
+    alias: 'd',
+    type: Boolean
   }
 ]
 
@@ -106,8 +111,10 @@ Options:
   --subset                Apply the shuffle only to a subset        
   -p, --prefix            Rename the items using the prefix + tokenId  
   -n, --name-mask         A mask to generate the final name
-  -r, --remaining         Used with, and only with --subset, saves the metadata not 
-                            included in the subset in a new file             
+  -r, --remaining         Used with with --subset and --limit. It saves the 
+                            metadata not included in the subset in a new file. If
+                            not specified, an automatic file is generated in the same
+                            folder of the input.   
   -f, --first-id          By default, it is 1. Set it if you need a different number
   --add-token-id          Adds a property tokenId in the metadata (not required by the
                             ERC721 standard, but required by some exchanges)
@@ -115,7 +122,8 @@ Options:
                             files will be saved as "1.json" instead of "1"         
   -J, --json-name-prefix  Set a name prexif for the metadata JSON files. It works
                             only with individual json files    
-  -l, --limit             Save only a limited number of the shuffled data                                                                          
+  -l, --limit             Save only a limited number of the shuffled data. 
+                            "-l 1000" is equivalent to "--subset 0 1000"                                                                           
 Example:
   
   # exports a single shuffled array to shuffled-meta.json, 

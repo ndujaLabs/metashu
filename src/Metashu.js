@@ -23,6 +23,12 @@ class Metashu {
   }
 
   async getOutput(opt) {
+    if (opt.doNotSave) {
+      return {
+        output: null,
+        split: false
+      }
+    }
     if (!opt.output || typeof opt.output !== 'string') {
       throw new Error('Output file missing')
     }
@@ -40,9 +46,12 @@ class Metashu {
     return {output, split}
   }
 
-  async getRemaining(opt) {
-    if (!opt.remaining || typeof opt.remaining !== 'string') {
-      throw new Error('Remaining file missing')
+  async getRemaining(opt, input) {
+    if (!opt.remaining) {
+      const inputDir = path.dirname(input)
+      const inputName = path.basename(input).split(".json")
+      const isoDate = (new Date).toISOString().replace(/\..+$/, '').replace(/:/g, '-')
+      return path.join(inputDir, inputName[0] + `_not-in-${opt.subset[0]}-${opt.subset[1]}_`+ isoDate +".json")
     }
     return opt.isCLI ? path.resolve(process.cwd(), opt.remaining) : opt.remaining
   }
@@ -95,15 +104,18 @@ class Metashu {
     let last
     let remaining
     let remainingMetadata = []
+    if (opt.limit && !opt.subset) {
+      opt.subset = [0, opt.limit - 1]
+    }
     if (Array.isArray(opt.subset) && opt.subset[1]) {
       first = opt.subset[0]
       last = opt.subset[1]
-      remaining = await this.getRemaining(opt)
+      if (first >= last) {
+        throw new Error("Invalid subset option")
+      }
+      remaining = await this.getRemaining(opt, input)
     }
     let len = shuffling.length
-    if (opt.limit && opt.limit < shuffling.length) {
-      len = opt.limit
-    }
     for (let i = 0; i < len; i++) {
       let item = metadata[shuffling[i].index]
       if (!last || (i >= first && i <= last)) {
@@ -126,14 +138,20 @@ class Metashu {
         } else {
           shuffled.push(item)
         }
-      } else {
+      } else if (remaining) {
         remainingMetadata.push(item)
+      } else {
+        break
       }
+    }
+    if (opt.doNotSave) {
+      return shuffled
     }
     if (!split) {
       await fs.writeFile(output, JSON.stringify(shuffled, null, 2))
     }
     if (remainingMetadata.length) {
+      await fs.ensureDir(path.dirname(remaining))
       await fs.writeFile(remaining, JSON.stringify(remainingMetadata, null, 2))
       return [output, remaining]
     } else {
@@ -141,8 +159,6 @@ class Metashu {
     }
   }
 
-
 }
-
 
 module.exports = Metashu
