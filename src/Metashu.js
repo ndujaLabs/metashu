@@ -23,6 +23,12 @@ class Metashu {
   }
 
   async getOutput(opt) {
+    if (opt.doNotSave) {
+      return {
+        output: null,
+        split: false
+      }
+    }
     if (!opt.output || typeof opt.output !== 'string') {
       throw new Error('Output file missing')
     }
@@ -137,6 +143,9 @@ class Metashu {
       } else {
         break
       }
+    }
+    if (opt.doNotSave) {
+      return shuffled
     }
     if (!split) {
       await fs.writeFile(output, JSON.stringify(shuffled, null, 2))

@@ -65,6 +65,11 @@ const optionDefinitions = [
     name: 'limit',
     alias: 'l',
     type: Number
+  },
+  {
+    name: 'no-not-save',
+    alias: 'd',
+    type: Boolean
   }
 ]
 
