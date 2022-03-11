@@ -94,10 +94,10 @@ class Metashu {
 
   async shuffle() {
     const opt = this.options
-    const input = await this.getInput(opt)
+    const input = opt.inputMetadata ? '' : await this.getInput(opt)
     const {output, split} = await this.getOutput(opt)
     const salt = this.getSalt(opt)
-    const metadata = await this.getMetadata(input)
+    const metadata = opt.inputMetadata || await this.getMetadata(input)
     const shuffling = this.getShuffling(metadata, salt)
     const shuffled = []
     let first

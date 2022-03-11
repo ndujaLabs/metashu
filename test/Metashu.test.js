@@ -135,6 +135,16 @@ describe('metashu', async function () {
 
     })
 
+    it('should shuffle starting from an object', async function () {
+
+      opt.inputMetadata = require('./fixtures/metadata.json')
+      opt.doNotSave = true
+      const metashu = new Metashu(opt)
+      const shuffled = await metashu.shuffle()
+      assert.equal(shuffled[1].name, 'Mosinhood')
+
+    })
+
     it('should shuffle and create individual files, adding a tokenId field', async function () {
 
       opt.output = path.dirname(opt.output)
